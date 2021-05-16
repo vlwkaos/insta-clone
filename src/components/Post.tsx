@@ -4,23 +4,24 @@ import { Avatar, Button, Input } from '@material-ui/core';
 import firebase from 'firebase'
 import { db } from '../firebase/firebase'
 
-export interface PostProps {
+export interface IPostProps {
     postId: string;
     imageSrc: string;
     userName: string;
     caption: string;
     timestamp: any;
+    currentUserName?: string | null;
 }
 
-interface IFireBaseComment {
+interface IComment {
     userName: string;
     text: string;
     timestamp: any;
 }
 
-function Post({ postId, imageSrc, userName, caption, timestamp }: PostProps): ReactElement {
+function Post({ postId, imageSrc, userName, currentUserName, caption, timestamp }: IPostProps): ReactElement {
 
-    const [comments, setComments] = useState<IFireBaseComment[]>([]);
+    const [comments, setComments] = useState<IComment[]>([]);
     const [comment, setComment] = useState('');
 
     // paging
@@ -38,7 +39,7 @@ function Post({ postId, imageSrc, userName, caption, timestamp }: PostProps): Re
                 .onSnapshot(snapshot => {
                     // doc.id는 firebase 데이터
                     // doc.data() 는 안에 데이터 구조 가져옴
-                    setComments(snapshot.docs.map(doc => doc.data() as IFireBaseComment));
+                    setComments(snapshot.docs.map(doc => doc.data() as IComment));
                 });
         return () => {
             // componentWillUnmount
@@ -49,7 +50,7 @@ function Post({ postId, imageSrc, userName, caption, timestamp }: PostProps): Re
     const handleCommentPost = () => {
         db.collection('posts').doc(postId).collection('comments').add({
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            userName: userName,
+            userName: currentUserName,
             text: comment
         });
         setComment('');

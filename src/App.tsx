@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import Post, { IPostProps } from './components/Post';
 import firebase from 'firebase';
-import { auth, db } from './firebase/firebase';
+import { listenPostChange } from './firebase/ContentApi';
 import ImageUpload from './components/ImageUpload';
 import SignUp from './components/SignUp';
+import { listenAuth, logout } from './firebase/AuthApi';
 
 function App() {
   const [openSignUpModal, setOpenSignUpModal] = useState(false);
@@ -13,40 +14,23 @@ function App() {
   // auth
   const [user, setUser] = useState<firebase.User | null>(null);
 
-  // user/userName바뀔 때
+  // 유저 상태 갱신
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        // user has logged in
-        setUser(authUser);
-
-      } else {
-        // user has logged out
-        setUser(null);
-      }
-    })
-    return () => {
-      unsubscribe(); // detach backend listener
-    }
+    // user바뀔 때
+    const unsubscribe = listenAuth((authUser) => setUser(authUser), () => setUser(null));
+    return () => unsubscribe(); // detach backend listener 
   }, [user])
-  // 
-  useEffect(() => {
-    // componentDidUpdate/Mount 
-    // onSnapshot collection변화가 있을 때
-    const unsubscribe = db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-      // doc.id는 firebase 데이터
-      // doc.data() 는 안에 데이터 구조 가져옴
-      setPosts(snapshot.docs.map(doc => ({
-        id: doc.id,
-        post: doc.data() as IPostProps
-      })));
 
+  // 게시글 갱신
+  useEffect(() => {
+    const unsubscribe = listenPostChange(snapshot => {
+      setPosts(snapshot.docs.map(doc => ({
+        id: doc.id, // doc.id는 firebase 데이터
+        post: doc.data() as IPostProps // doc.data() 는 안에 데이터 구조 가져옴
+      })));
     });
 
-    return () => {
-      // componentWillUnmount
-      unsubscribe();
-    }
+    return () => unsubscribe();
   }, [posts]) // 조건, posts 바뀔 때
 
   return (
@@ -62,7 +46,7 @@ function App() {
         </img>
         {user ? (<>
           <ImageUpload userName={user.displayName} ></ImageUpload>
-          <Button onClick={() => auth.signOut()} >Logout</Button></>)
+          <Button onClick={logout} >Logout</Button></>)
           : (<Button onClick={() => setOpenSignUpModal(true)} >Sign Up</Button>)}
       </header>
       {/* Posts */}

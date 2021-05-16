@@ -1,0 +1,33 @@
+
+.post {
+    background-color: white;
+    --default_margin: 16px;
+    max-width: 540px;
+    border: 1px solid lightgrey;
+    margin-bottom: 45px;
+}
+
+.post__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: var(--default_margin);
+}
+
+.post__avatar {
+    margin-right: var(--default_margin);
+}
+
+.post__image {
+    width: 100%;
+    min-height: 320px;
+    background-color: #fafafa;
+    object-fit: contain;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+}
+
+.post__caption {
+    margin: var(--default_margin);
+    
+}

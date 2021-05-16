@@ -1,24 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Post from './components/Post';
 
 function App() {
+  const [posts, setPosts] = useState([
+    {
+      userName: 'UserName01',
+      caption: 'first ever post',
+      imageSrc: ''
+    }
+  ]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className="app">
+      {/* Header */}
+      <header className="app_header">
+        <img
+          className="app_headerImage"
+          src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png"
+          alt=""
         >
-          Learn React
-        </a>
+        </img>
+
       </header>
+      {/* Posts */}
+      <section className="app_postContainer">
+        {posts.map((post, i) =>
+          <Post key={i} imageSrc={post.imageSrc} userName={post.userName} caption={post.caption}></Post>
+        )}
+      </section>
     </div>
   );
 }

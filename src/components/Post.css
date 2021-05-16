@@ -29,5 +29,8 @@
 
 .post__caption {
     margin: var(--default_margin);
-    
+}
+
+.post__commentContainer {
+    margin: var(--default_margin);
 }

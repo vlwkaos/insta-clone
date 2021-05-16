@@ -18,8 +18,10 @@ function App() {
   useEffect(() => {
     // user바뀔 때
     const unsubscribe = listenAuth((authUser) => setUser(authUser), () => setUser(null));
-    return () => unsubscribe(); // detach backend listener 
-  }, [user])
+    return () => {
+      unsubscribe(); // detach backend listener 
+    }
+  }, [])
 
   // 게시글 갱신
   useEffect(() => {
@@ -30,8 +32,10 @@ function App() {
       })));
     });
 
-    return () => unsubscribe();
-  }, [posts]) // 조건, posts 바뀔 때
+    return () => {
+      unsubscribe();
+    }
+  }, []) // 조건, posts 바뀔 때
 
   return (
     <div className="app">

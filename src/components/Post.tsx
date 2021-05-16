@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactElement } from 'react'
+import { useState, useEffect, ReactElement, FormEvent } from 'react'
 import './Post.css';
 import { Avatar, Button, Input } from '@material-ui/core';
 import { listenPostCommentChange, createComment } from '../firebase/ContentApi';
@@ -32,10 +32,13 @@ function Post({ postId, imageSrc, userName, currentUserName, caption, timestamp 
             unsubscribe = listenPostCommentChange(postId, snapshot => {
                 setComments(snapshot.docs.map(doc => doc.data() as IComment));
             });
-        return () => unsubscribe();
+        return () => {
+            unsubscribe();
+        }
     }, [postId]) // 조건, posts 바뀔 때
 
-    const handleCommentPost = () => {
+    const handleCommentPost = (e: FormEvent) => {
+        e.preventDefault();
         if (currentUserName) createComment(postId, currentUserName, comment);
         setComment('');
     }
@@ -46,7 +49,7 @@ function Post({ postId, imageSrc, userName, currentUserName, caption, timestamp 
             <h3 className='post__header'>
                 <Avatar
                     className='post__avatar'
-                    alt='Name'
+                    alt={userName}
                     src='' />
                 {userName}</h3>
             {/* image */}
@@ -59,14 +62,17 @@ function Post({ postId, imageSrc, userName, currentUserName, caption, timestamp 
                 <strong>{userName} </strong> {caption}
             </div>
             {/* comments */}
+            <div className="post_commentContainer">
             {comments.map(comment =>
                 <div className='post__comment'>
                     <strong>{comment.userName} </strong> {comment.text}
                 </div>)}
-            {currentUserName && <div className='post__inputComment'>
+            </div>
+            {currentUserName &&
+                <div className='post__inputComment'>
                 <form onSubmit={(e) => e.preventDefault()}>
                     <Input type='text' placeholder='Type in comments...' value={comment} onChange={(e) => setComment(e.target.value)}></Input>
-                    <Button onClick={handleCommentPost}>POST</Button>
+                    <Button type='submit' onClick={handleCommentPost} disabled={!comment}>Post</Button>
                 </form>
             </div>}
         </div>

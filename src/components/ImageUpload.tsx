@@ -1,6 +1,6 @@
 import { Button, Input } from '@material-ui/core'
 import { ReactElement, useState } from 'react'
-import { storage, db } from '../firebase';
+import { storage, db } from '../firebase/firebase';
 import firebase from 'firebase';
 
 interface Props {
@@ -55,7 +55,6 @@ function ImageUpload({ userName }: Props): ReactElement {
 
     return (
         <div className='imageUpload'>
-            <h3>Type In Caption</h3>
             <progress value={progress} max='100'></progress>
             <Input placeholder='Enter a caption' type='text' onChange={(e => setCaption(e.target.value))}></Input>
             <Input type='file' onChange={handleChange}></Input>

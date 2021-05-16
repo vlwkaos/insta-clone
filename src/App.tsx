@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Post, { PostProps } from './components/Post';
 import firebase from 'firebase';
-import { auth, db } from './firebase';
+import { auth, db } from './firebase/firebase';
 import ImageUpload from './components/ImageUpload';
 
 function App() {
-  const [posts, setPosts] = useState<PostProps[]>([]);
+  const [posts, setPosts] = useState<{ id: string, post: PostProps }[]>([]);
   const [open, setSignUpOpen] = useState(false);
   // signup
   const [signUpEmail, setEmail] = useState('');
@@ -36,15 +36,19 @@ function App() {
   useEffect(() => {
     // componentDidUpdate/Mount 
     // onSnapshot collection변화가 있을 때
-    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+    const unsubscribe = db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
       // doc.id는 firebase 데이터
       // doc.data() 는 안에 데이터 구조 가져옴
-      setPosts(snapshot.docs.map(doc => doc.data() as PostProps))
+      setPosts(snapshot.docs.map(doc => ({
+        id: doc.id,
+        post: doc.data() as PostProps
+      })));
 
     });
 
     return () => {
       // componentWillUnmount
+      unsubscribe();
     }
   }, [posts]) // 조건, posts 바뀔 때
 
@@ -100,9 +104,9 @@ function App() {
       </header>
       {/* Posts */}
       <section className="app__postContainer">
-        {posts.map((post, i) =>
+        {posts.map(({ id, post }) =>
           // key로 리액트가 판별
-          <Post key={i} imageSrc={post.imageSrc} userName={post.userName} caption={post.caption} timestamp={post.timestamp}></Post>
+          <Post key={id} postId={id} imageSrc={post.imageSrc} userName={post.userName} caption={post.caption} timestamp={post.timestamp}></Post>
         )}
       </section>
     </div>

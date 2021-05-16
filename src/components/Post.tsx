@@ -6,10 +6,10 @@ export interface PostProps {
     imageSrc: string;
     userName: string;
     caption: string;
+    timestamp: string;
 }
 
-function Post({ imageSrc, userName, caption }: PostProps): ReactElement {
-
+function Post({ imageSrc, userName, caption, timestamp }: PostProps): ReactElement {
 
     return (
         <div className='post'>
@@ -19,7 +19,7 @@ function Post({ imageSrc, userName, caption }: PostProps): ReactElement {
                     className='post__avatar'
                     alt='Name'
                     src='' />
-                Username</h3>
+                {userName}</h3>
             {/* image */}
             <img className='post__image'
                 src={imageSrc}

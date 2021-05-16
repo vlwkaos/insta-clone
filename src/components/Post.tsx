@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react'
 import './Post.css';
 import { Avatar } from '@material-ui/core';
 
-interface PostProps {
+export interface PostProps {
     imageSrc: string;
     userName: string;
     caption: string;

@@ -20,7 +20,7 @@
 
 .post__image {
     width: 100%;
-    min-height: 320px;
+    min-height: 240px;
     background-color: #fafafa;
     object-fit: contain;
     border-top: 1px solid lightgray;

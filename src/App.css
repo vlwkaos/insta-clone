@@ -7,13 +7,27 @@
   height: 100vh;
 }
 
-.app_header {
+.app__modalSignUp {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  width: 40vw;
+  flex-direction: column;
+  background-color: #fafafa;
+}
+
+.app__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   background-color: white;
   width:100%;
   border-bottom: 1px solid lightgray;
 }
 
-.app_headerImage {
+.app__headerImage {
   padding: 20px;
   width: 120px;
   object-fit: contain;

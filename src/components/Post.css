@@ -3,8 +3,16 @@
     background-color: white;
     --default_margin: 16px;
     max-width: 540px;
+    width: 50vw;
     border: 1px solid lightgrey;
     margin-bottom: 45px;
+    transition: all 0.2s;
+}
+
+@media only screen and (max-width: 1023px) {
+    .post {
+        width: 100%;
+    }
 }
 
 .post__header {
@@ -16,11 +24,13 @@
 
 .post__avatar {
     margin-right: var(--default_margin);
+    width: 36px;
+    height: 36px;
 }
 
 .post__image {
     width: 100%;
-    min-height: 240px;
+    height: auto;
     background-color: #fafafa;
     object-fit: contain;
     border-top: 1px solid lightgray;
@@ -30,7 +40,23 @@
 .post__caption {
     margin: var(--default_margin);
 }
+.post__caption .comment .comment__avatar {
+    margin-right: calc(var(--default_margin) - 4px);
+    width: 36px;
+    height: 36px;
+    margin-bottom: 12px;
+}
 
 .post__commentContainer {
     margin: var(--default_margin);
+}
+
+.post__inputComment {
+    width: 100%;
+    padding: 10px;
+}
+
+.post__inputComment form {
+    width: 100%;
+    box-sizing: border-box;
 }

@@ -1,0 +1,10 @@
+
+.imageUpload {
+    width: 80%;
+    display:flex;
+    flex-direction: column;
+}
+
+.imageUpload__loginRequired {
+    text-align: center; 
+}

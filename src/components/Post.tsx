@@ -1,7 +1,8 @@
 import { useState, useEffect, ReactElement, FormEvent } from 'react'
-import './Post.css';
 import { Avatar, Button, Input } from '@material-ui/core';
 import { listenPostCommentChange, createComment } from '../firebase/ContentApi';
+import Comment, { ICommentProps } from './Comment';
+import './Post.css';
 
 export interface IPostProps {
     postId: string;
@@ -12,25 +13,17 @@ export interface IPostProps {
     currentUserName?: string | null;
 }
 
-interface IComment {
-    userName: string;
-    text: string;
-    timestamp: any;
-}
-
 function Post({ postId, imageSrc, userName, currentUserName, caption, timestamp }: IPostProps): ReactElement {
 
-    const [comments, setComments] = useState<IComment[]>([]);
+    const [comments, setComments] = useState<ICommentProps[]>([]);
     const [comment, setComment] = useState('');
 
     // paging
     // @link https://firebase.google.com/docs/firestore/query-data/query-cursors
 
     useEffect(() => {
-        let unsubscribe: any;
-        if (postId)
-            unsubscribe = listenPostCommentChange(postId, snapshot => {
-                setComments(snapshot.docs.map(doc => doc.data() as IComment));
+        let unsubscribe = listenPostCommentChange(postId, snapshot => {
+            setComments(snapshot.docs.map(doc => doc.data() as ICommentProps));
             });
         return () => {
             unsubscribe();
@@ -56,17 +49,16 @@ function Post({ postId, imageSrc, userName, currentUserName, caption, timestamp 
             <img className='post__image'
                 src={imageSrc}
                 alt=''
+                width='400'
+                height='300'
             ></img>
             {/* username + caption */}
             <div className='post__caption'>
-                <strong>{userName} </strong> {caption}
+                <Comment userName={userName} text={caption} timestamp={timestamp} />
             </div>
             {/* comments */}
-            <div className="post_commentContainer">
-            {comments.map(comment =>
-                <div className='post__comment'>
-                    <strong>{comment.userName} </strong> {comment.text}
-                </div>)}
+            <div className='post__commentContainer'>
+                {comments.map(({ userName, text, timestamp }, i) => <Comment key={i} userName={userName} text={text} timestamp={timestamp} />)}
             </div>
             {currentUserName &&
                 <div className='post__inputComment'>

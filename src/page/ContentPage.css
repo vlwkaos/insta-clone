@@ -1,0 +1,62 @@
+.contentPage {
+  display:flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fafafa;
+}
+
+.contentPage__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  width:100%;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 25px;
+  height: 64px
+}
+
+.contentPage__headerImage {
+  padding: 12px;
+  width: 120px;
+  object-fit: contain;
+}
+
+.contentPage__buttonLogout {
+  font-size: 14px;
+  text-decoration: none;
+  margin-right: 24px;
+  border: none;
+  background-color: inherit;
+}
+
+.contentPage__buttonLogout:hover {
+  color: lightgrey;
+}
+
+.contentPage__buttonLogin {
+  color: white;
+  background-color: var(--button-active);
+  padding: 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  margin-right: 18px;
+}
+
+.contentPage__buttonSignUp {
+  font-size: 14px;
+  color: var(--button-active);
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 24px;
+}
+
+.contentPage__postContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -1,0 +1,15 @@
+.comment {
+   display: flex;
+   flex-direction: row; 
+   margin-bottom: 24px;
+}
+
+.comment .comment__avatar {
+    margin-right: var(--default_margin);
+    width: 32px;
+    height: 32px;
+}
+
+.comment__text {
+
+}

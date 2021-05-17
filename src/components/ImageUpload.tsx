@@ -1,6 +1,7 @@
 import { Button, Input } from '@material-ui/core'
 import { ReactElement, useState } from 'react'
 import { listenUploadProgress } from '../firebase/ContentApi';
+import './ImageUpload.css';
 
 interface Props {
     userName: string | null
@@ -34,10 +35,10 @@ function ImageUpload({ userName }: Props): ReactElement {
 
     return (
         <div className='imageUpload'>
-            <progress value={progress} max='100'></progress>
             <Input placeholder='Enter a caption' type='text' onChange={(e => setCaption(e.target.value))}></Input>
             <Input type='file' onChange={handleChange}></Input>
-            <Button onClick={handleUpload} >Upload</Button>
+            <progress value={progress} max='100'></progress>
+            <Button onClick={handleUpload} >post</Button>
         </div>
     )
 }

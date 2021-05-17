@@ -1,6 +1,6 @@
 import { useState, useEffect, ReactElement, FormEvent } from 'react'
 import { Avatar, Button, Input } from '@material-ui/core';
-import { listenPostCommentChange, createComment } from '../firebase/ContentApi';
+import { subscribeToPostCommentChange, createComment } from '../firebase/ContentApi';
 import Comment, { ICommentProps } from './Comment';
 import './Post.css';
 
@@ -22,7 +22,7 @@ function Post({ postId, imageSrc, userName, currentUserName, caption, timestamp 
     // @link https://firebase.google.com/docs/firestore/query-data/query-cursors
 
     useEffect(() => {
-        let unsubscribe = listenPostCommentChange(postId, snapshot => {
+        let unsubscribe = subscribeToPostCommentChange(postId, snapshot => {
             setComments(snapshot.docs.map(doc => doc.data() as ICommentProps));
             });
         return () => {

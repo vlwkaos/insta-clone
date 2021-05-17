@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import './ContentPage.css';
 import Post, { IPostProps } from '../components/Post';
 import firebase from 'firebase';
-import { listenPostChange } from '../firebase/ContentApi';
+import { subscribeToPostChange } from '../firebase/ContentApi';
 import ImageUpload from '../components/ImageUpload';
-import { listenAuth, logout } from '../firebase/AuthApi';
+import { subscribeToAuth, logout } from '../firebase/AuthApi';
 import { Link } from 'react-router-dom';
 
 function ContentPage() {
@@ -16,7 +16,7 @@ function ContentPage() {
     // 유저 상태 갱신
     useEffect(() => {
         // user바뀔 때
-        const unsubscribe = listenAuth((authUser) => setUser(authUser), () => setUser(null));
+        const unsubscribe = subscribeToAuth((authUser) => setUser(authUser), () => setUser(null));
         return () => {
             unsubscribe(); // detach backend listener 
         }
@@ -24,7 +24,7 @@ function ContentPage() {
 
     // 게시글 갱신
     useEffect(() => {
-        const unsubscribe = listenPostChange(snapshot => {
+        const unsubscribe = subscribeToPostChange(snapshot => {
             setPosts(snapshot.docs.map(doc => ({
                 id: doc.id, // doc.id는 firebase 데이터
                 post: doc.data() as IPostProps // doc.data() 는 안에 데이터 구조 가져옴

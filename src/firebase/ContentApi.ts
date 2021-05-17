@@ -1,7 +1,7 @@
 import { db, storage } from "./firebase";
 import firebase from 'firebase'
 
-export function listenPostChange(onChangePost: (snapshot: firebase.firestore.QuerySnapshot) => void) {
+export function subscribeToPostChange(onChangePost: (snapshot: firebase.firestore.QuerySnapshot) => void) {
     return db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
         onChangePost(snapshot);
     })
@@ -17,7 +17,7 @@ function createPost(userName: string, caption: string, imageUrl: string) {
     });
 }
 
-export function listenUploadProgress(userName: string, image: any, caption: string, onChangeProgress: (snapshot: firebase.storage.UploadTaskSnapshot) => void, onCompleteUpload: () => void) {
+export function subscribeToUploadProgress(userName: string, image: any, caption: string, onChangeProgress: (snapshot: firebase.storage.UploadTaskSnapshot) => void, onCompleteUpload: () => void) {
     
         // storage에서 해당 위치에 image 파일 저장
         const uploadTask = storage.ref(`images/${image.name}`).put(image)
@@ -42,7 +42,7 @@ export function listenUploadProgress(userName: string, image: any, caption: stri
         )
 }
 
-export function listenPostCommentChange(postId: string, onChangeComments: (snapshot: firebase.firestore.QuerySnapshot) => void) {
+export function subscribeToPostCommentChange(postId: string, onChangeComments: (snapshot: firebase.firestore.QuerySnapshot) => void) {
            return db.collection('posts')
                 .doc(postId)
                 .collection('comments')

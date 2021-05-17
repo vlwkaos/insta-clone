@@ -1,6 +1,6 @@
 import { Button, Input } from '@material-ui/core'
 import { ReactElement, useState } from 'react'
-import { listenUploadProgress } from '../firebase/ContentApi';
+import { subscribeToUploadProgress } from '../firebase/ContentApi';
 import './ImageUpload.css';
 
 interface Props {
@@ -21,7 +21,7 @@ function ImageUpload({ userName }: Props): ReactElement {
 
     const handleUpload = () => {
         if (userName != null && image != null)
-            listenUploadProgress(userName, image, caption, (snapshot) => {
+            subscribeToUploadProgress(userName, image, caption, (snapshot) => {
             // 업로드 상태를 계속 listening함
             const progress = Math.round(snapshot.bytesTransferred / snapshot.totalBytes * 100);
             setProgress(progress);

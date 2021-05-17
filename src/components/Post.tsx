@@ -1,10 +1,10 @@
 import { useState, useEffect, ReactElement, FormEvent } from 'react'
 import { Avatar, Button, Input } from '@material-ui/core';
 import { subscribeToPostCommentChange, createComment } from '../firebase/ContentApi';
-import Comment, { ICommentProps } from './Comment';
+import Comment, { CommentProps } from './Comment';
 import './Post.css';
 
-export interface IPostProps {
+export interface PostProps {
     postId: string;
     imageSrc: string;
     userName: string;
@@ -13,9 +13,9 @@ export interface IPostProps {
     currentUserName?: string | null;
 }
 
-function Post({ postId, imageSrc, userName, currentUserName, caption, timestamp }: IPostProps): ReactElement {
+function Post({ postId, imageSrc, userName, currentUserName, caption, timestamp }: PostProps): ReactElement {
 
-    const [comments, setComments] = useState<ICommentProps[]>([]);
+    const [comments, setComments] = useState<CommentProps[]>([]);
     const [comment, setComment] = useState('');
 
     // paging
@@ -23,7 +23,7 @@ function Post({ postId, imageSrc, userName, currentUserName, caption, timestamp 
 
     useEffect(() => {
         let unsubscribe = subscribeToPostCommentChange(postId, snapshot => {
-            setComments(snapshot.docs.map(doc => doc.data() as ICommentProps));
+            setComments(snapshot.docs.map(doc => doc.data() as CommentProps));
             });
         return () => {
             unsubscribe();

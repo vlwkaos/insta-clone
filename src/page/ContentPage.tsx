@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import './ContentPage.css';
-import Post, { IPostProps } from '../components/Post';
+import Post, { PostProps } from '../components/Post';
 import firebase from 'firebase';
 import { subscribeToPostChange } from '../firebase/ContentApi';
 import ImageUpload from '../components/ImageUpload';
@@ -9,7 +9,7 @@ import { subscribeToAuth, logout } from '../firebase/AuthApi';
 import { Link } from 'react-router-dom';
 
 function ContentPage() {
-    const [posts, setPosts] = useState<{ id: string, post: IPostProps }[]>([]);
+    const [posts, setPosts] = useState<{ id: string, post: PostProps }[]>([]);
     // auth
     const [user, setUser] = useState<firebase.User | null>(null);
 
@@ -27,7 +27,7 @@ function ContentPage() {
         const unsubscribe = subscribeToPostChange(snapshot => {
             setPosts(snapshot.docs.map(doc => ({
                 id: doc.id, // doc.id는 firebase 데이터
-                post: doc.data() as IPostProps // doc.data() 는 안에 데이터 구조 가져옴
+                post: doc.data() as PostProps // doc.data() 는 안에 데이터 구조 가져옴
             })));
         });
 

@@ -33,15 +33,6 @@
     }
 }
 
-.signUpPage__form input {
-    font-size: 14px;
-    background-color: #fafafa;
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid lightgrey;
-    margin-bottom: 8px;
-}
-
 .signUpPage__form button {
     font-size: 14px;
     font-weight: bold;
@@ -52,6 +43,11 @@
     border: none;
     margin-top: 8px;
     margin-bottom: 8px;
+}
+
+
+.signUpPage__form button:disabled {
+    background-color: var(--button-disabled);
 }
 
 .signUpPage__signUpContainer {

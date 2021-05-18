@@ -37,15 +37,10 @@ function ContentPage() {
     }, []) // 조건, posts 바뀔 때
 
     return (
-        <div className="contentPage">
+        <div className='contentPage'>
             {/* Header */}
-            <header className="contentPage__header">
-                <img
-                    className="contentPage__headerImage"
-                    src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png"
-                    alt=""
-                >
-                </img>
+            <header className='contentPage__header'>
+                <img className='contentPage__headerImage' src='https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png' alt="" />
                 {user ? (<>
                     <button className='contentPage__buttonLogout' onClick={logout} >Logout</button></>)
                     : (<div className='contentPage__buttons'>
@@ -54,8 +49,9 @@ function ContentPage() {
                     </div>)}
             </header>
             {/* Posts */}
-            <section className="contentPage__postContainer">
-                {posts.map(({ id, post }) =>
+            <section className='contentPage__postContainer'>
+                {posts.length === 0 ? <div className='contentPage__postLoading'></div>
+                    : posts.map(({ id, post }) =>
                     // key로 리액트가 판별
                     <Post key={id} postId={id} currentUserName={user?.displayName} imageSrc={post.imageSrc} userName={post.userName} caption={post.caption} timestamp={post.timestamp}></Post>
                 )}

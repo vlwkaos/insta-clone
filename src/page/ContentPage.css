@@ -56,7 +56,27 @@
 }
 
 .contentPage__postContainer {
+  max-width: 540px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.contentPage__postLoading {
+  max-width: 540px;
+  height: 540px;
+  width: 100%;
+  border: 1px solid lightgrey;
+  margin-bottom: 45px;
+  animation: loading 1s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-color: lightgrey;
+  }
+  100% {
+    background-color: white;
+  }
 }

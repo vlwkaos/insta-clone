@@ -1,4 +1,5 @@
 * {
   margin: 0;
   --button-active: #0095F6;
+  --button-disabled: #B2DFFC;
 }

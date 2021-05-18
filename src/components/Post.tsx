@@ -3,6 +3,7 @@ import { Avatar, Button, Input } from '@material-ui/core';
 import { subscribeToPostCommentChange, createComment } from '../firebase/ContentApi';
 import Comment, { CommentProps } from './Comment';
 import './Post.css';
+import StyledInput from './StyledInput';
 
 export interface PostProps {
     postId: string;
@@ -10,7 +11,7 @@ export interface PostProps {
     userName: string;
     caption: string;
     timestamp: any;
-    currentUserName?: string | null;
+    currentUserName: string | null | undefined;
 }
 
 function Post({ postId, imageSrc, userName, currentUserName, caption, timestamp }: PostProps): ReactElement {
@@ -49,8 +50,8 @@ function Post({ postId, imageSrc, userName, currentUserName, caption, timestamp 
             <img className='post__image'
                 src={imageSrc}
                 alt=''
-                width='400'
-                height='300'
+                width='540'
+                height='540'
             ></img>
             {/* username + caption */}
             <div className='post__caption'>
@@ -63,8 +64,8 @@ function Post({ postId, imageSrc, userName, currentUserName, caption, timestamp 
             {currentUserName &&
                 <div className='post__inputComment'>
                 <form onSubmit={(e) => e.preventDefault()}>
-                    <Input type='text' placeholder='Type in comments...' value={comment} onChange={(e) => setComment(e.target.value)}></Input>
-                    <Button type='submit' onClick={handleCommentPost} disabled={!comment}>Post</Button>
+                    <StyledInput type='text' placeholder='Type in comments...' value={comment} onChange={(e) => setComment(e.target.value)} />
+                    <button type='submit' onClick={handleCommentPost} disabled={!comment}>Post</button>
                 </form>
             </div>}
         </div>

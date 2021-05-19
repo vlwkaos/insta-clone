@@ -1,5 +1,8 @@
-# 리액트 View 연습
+# 인스타그램 클론
 
+React & Firebase 연동 예제
+
+![](https://i.imgur.com/KAsrpjK.png)
 
 
 # Getting Started with Create React App
